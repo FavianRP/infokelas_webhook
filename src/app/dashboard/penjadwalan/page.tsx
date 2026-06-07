@@ -7,6 +7,10 @@ import axios from "axios";
 export default function PenjadwalanPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [webhooks, setWebhooks] = useState<{ id: string; name: string }[]>([]);
+  const [selectedWebhook, setSelectedWebhook] = useState("");
+  const [content, setContent] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
   const handleSave = async () => {
     try {
@@ -73,7 +77,11 @@ export default function PenjadwalanPage() {
                 <label className="block text-sm font-semibold mb-1 text-gray-900">
                   Tujuan Channel
                 </label>
-                <select className="w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-700 cursor-pointer">
+                <select
+                  value={selectedWebhook}
+                  onChange={(e) => setSelectedWebhook(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-700 cursor-pointer"
+                >
                   <option value="">-- Pilih Webhook Tujuan --</option>
                   {webhooks.map((w) => (
                     <option key={w.id} value={w.id}>
@@ -90,6 +98,8 @@ export default function PenjadwalanPage() {
                   </label>
                   <input
                     type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                     className="w-full rounded-lg border border-gray-300 p-2.5 text-sm cursor-pointer"
                   />
                 </div>
@@ -99,6 +109,8 @@ export default function PenjadwalanPage() {
                   </label>
                   <input
                     type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
                     className="w-full rounded-lg border border-gray-300 p-2.5 text-sm cursor-pointer"
                   />
                 </div>
@@ -110,6 +122,8 @@ export default function PenjadwalanPage() {
                 </label>
                 <textarea
                   rows={3}
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-700"
                   placeholder="Contoh: Jangan lupa deadline tugas Web Prog!"
                 />
@@ -123,7 +137,10 @@ export default function PenjadwalanPage() {
               >
                 Batal
               </button>
-              <button className="bg-black text-white px-5 py-2 rounded-lg text-sm font-semibold cursor-pointer hover:bg-gray-800">
+              <button
+                onClick={handleSave}
+                className="bg-black text-white px-5 py-2 rounded-lg text-sm font-semibold cursor-pointer hover:bg-gray-800"
+              >
                 Simpan Penjadwalan
               </button>
             </div>
