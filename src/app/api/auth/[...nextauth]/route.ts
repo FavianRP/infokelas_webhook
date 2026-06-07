@@ -1,16 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { prisma } from "@/lib/prisma"; // Mengambil prisma yang sudah dikonfigurasi dengan adapter pg
 import bcrypt from "bcryptjs";
-
-// Inisialisasi koneksi database menggunakan Driver Adapter (Wajib di Prisma 7)
-const connectionString = `${process.env.DATABASE_URL}`;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
 
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma) as any,
@@ -58,7 +50,7 @@ const handler = NextAuth({
     strategy: "jwt",
   },
   pages: {
-    signIn: "/login", // Nanti kita buat halaman login kustom
+    signIn: "/login",
   },
   callbacks: {
     async session({ session, token }) {
