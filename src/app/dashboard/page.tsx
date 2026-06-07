@@ -101,7 +101,7 @@ export default async function DashboardPage() {
                   </td>
                 </tr>
               ) : (
-                recentMessages.map((msg) => (
+                recentMessages.map((msg: any) => (
                   <tr
                     key={msg.id}
                     className="hover:bg-gray-50 transition-colors"
